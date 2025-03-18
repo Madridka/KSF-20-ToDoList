@@ -7,25 +7,7 @@
     </div>
     <div class="centered-main-page-element">
       <TaskInput @task-added="addNewTask"></TaskInput>
-      <TaskList :tasks="tasks"></TaskList>
-
-
-      <!--         
-        <h3>Todo</h3>
-        <ul id='incompleteTasks'>
-            <li><input type='checkbox'><label class="task">Pay Bills</label><input type="text" class="task"><button
-                    class="edit">Edit</button><button class="delete"><img :src="require('@/assets/remove.svg')"></button></li>
-            <li class="editMode"><input type="checkbox"><label class="task">Go Shopping</label><input type="text"
-                    value="Go Shopping" class="task"><button class='edit'>Save</button><button class="delete"><img
-                        :src="require('@/assets/remove.svg')"></button></li>
-        </ul>
-        <h3>Completed</h3>
-        <ul id="completed-tasks">
-            <li><input type="checkbox" checked><label class="task">See the Doctor</label><input type="text"
-                    class="task"><button class="edit">Edit</button><button class="delete"><img
-                        :src="require('@/assets/remove.svg')"></button>
-            </li>
-        </ul> -->
+      <TaskList :tasks="tasks" @delete-task="deleteTask"></TaskList>
     </div>
   </div>
 </template>
@@ -43,14 +25,25 @@ export default {
 
   data() {
     return {
-      tasks: ["Оплатить счета", "Погулять с собакой"],
+      tasks: [
+        {id: 1, todo: "Погулять с собакой", completed: false},
+        {id: 2, todo: "Выпить кофе", completed: true},
+        {id: 3, todo: "Купить сахар", completed: true},
+        ],
     };
   },
 
   methods: {
     addNewTask(task) {
-      this.tasks.push(task);
+      this.tasks.push({
+        id: Date.now(),
+        todo: task,
+        completed: false,
+      });
     },
+    deleteTask(id) {
+      this.tasks = this.tasks.filter(task => task.id !== id);
+    }
   },
 };
 </script>
