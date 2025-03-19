@@ -8,6 +8,7 @@
     <div class="centered-main-page-element">
       <TaskInput @task-added="addNewTask"></TaskInput>
       <TaskList :tasks="tasks" @delete-task="deleteTask"></TaskList>
+      <TaskItem :tasks="tasks"></TaskItem>
     </div>
   </div>
 </template>
@@ -15,12 +16,14 @@
 <script>
 import TaskInput from "./components/TaskInput.vue";
 import TaskList from "./components/TaskList.vue";
+import TaskItem from "./components/TaskItem.vue";
 
 export default {
   name: "App",
   components: {
     TaskInput, 
     TaskList,
+    TaskItem,
   },
 
   data() {

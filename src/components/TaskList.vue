@@ -1,47 +1,26 @@
 <template>
-  <div class="incompletedTasks">
-    <h3>СДЕЛАТЬ:</h3>
-    <ul>
-      <div v-for="(task, id) in tasks" :key="id">
-        <div v-if="task.completed !== true">
-          <li>
-            <input type="checkbox" v-model="task.completed" />
-            <div class="task">{{ task.todo }}</div>
-            <button class="edit">Изменить</button>
-            <button class="delete" @click="deleteTask(task.id)">
-              <img :src="require('@/assets/remove.svg')" />
-            </button>
-          </li>
-        </div>
-      </div>
-    </ul>
+  <div>
+    <div class="incompletedTasks">
+      <h3>СДЕЛАТЬ:</h3>
+      <ul>
+        <TaskItem v-for="task in activeTasks" :key="task.id"></TaskItem>
+      </ul>
+    </div>
 
-  <div class="completed-tasks">
-    <h3>ЗАВЕРШЕНО:</h3>
-    <ul >
-      <div v-for="(task, id) in tasks" :key="id">
-        <div v-if="task.completed">
-          <li>
-          <input type="checkbox" v-model="task.completed" />
-          <div class="task">{{ task.todo }}</div>
-          <button class="edit">Изменить</button>
-          <button class="delete" @click="deleteTask(task.id)">
-            <img :src="require('@/assets/remove.svg')" />
-          </button>
-        </li>
-        </div>
-      </div>
-    </ul>
-  </div>
+    <div class="completed-tasks">
+      <h3>ЗАВЕРШЕНО:</h3>
 
+    </div>
   </div>
 </template>
 
 <script>
+import TaskItem from "./TaskItem.vue";
+
 export default {
   name: "TaskList",
-  data() {
-    return {};
+  components: {
+    TaskItem,
   },
   props: {
     tasks: {
@@ -53,6 +32,14 @@ export default {
       this.$emit("delete-task", id);
     },
   },
+  computed: {
+    activeTasks() {
+      return this.tasks.filter(task => !task.computed)
+    },
+    completedTasks() {
+      return this.tasks.filter(task => !task.computed)
+    }
+  }
 };
 </script>
 

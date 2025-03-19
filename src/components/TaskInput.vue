@@ -3,7 +3,7 @@
     <label for="new-task">Список дел</label>
     <div class="task-row-wrapper">
         <input id='new-task' class="task" v-model="newTask" type="text">
-        <button @click="addTask">Доб</button>
+        <button @click="addTask">Доб.</button>
     </div>
   </div>
 </template>
