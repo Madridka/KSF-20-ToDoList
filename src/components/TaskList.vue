@@ -3,13 +3,12 @@
     <div class="incompletedTasks">
       <h3>СДЕЛАТЬ:</h3>
       <ul>
-        <TaskItem v-for="task in activeTasks" :key="task.id"></TaskItem>
+
       </ul>
     </div>
 
     <div class="completed-tasks">
       <h3>ЗАВЕРШЕНО:</h3>
-
     </div>
   </div>
 </template>
@@ -34,12 +33,12 @@ export default {
   },
   computed: {
     activeTasks() {
-      return this.tasks.filter(task => !task.computed)
+      return this.tasks.filter((task) => !task.completed);
     },
     completedTasks() {
-      return this.tasks.filter(task => !task.computed)
-    }
-  }
+      return this.tasks.filter((task) => !task.completed);
+    },
+  },
 };
 </script>
 

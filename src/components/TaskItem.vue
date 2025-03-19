@@ -1,12 +1,14 @@
 <template>
-  <li>
-    <input type="checkbox" v-model="task.completed" @change="toggleTask" />
-    <div class="task">{{ task.todo }}</div>
-    <button class="edit" @click="editTask">Изменить</button>
-    <button class="delete" @click="deleteTask">
-      <img :src="require('@/assets/remove.svg')" alt="Delete task" />
-    </button>
-  </li>
+  <div>
+    <li>
+      <input type="checkbox" v-model="task.completed" />
+      <div class="task">{{ task.todo }}</div>
+      <button class="edit" @click="editTask">Изменить</button>
+      <button class="delete" @click="deleteTask">
+        <img :src="require('@/assets/remove.svg')" alt="Delete task" />
+      </button>
+    </li>
+  </div>
 </template>
 
 <script>
