@@ -1,10 +1,10 @@
 <template>
   <div>
     <label for="new-task">Список дел</label>
-    <div class="task-row-wrapper">
+    <form class="task-row-wrapper" @submit.prevent="addTask">
         <input id='new-task' class="task" v-model="newTask" type="text">
         <button @click="addTask">Доб.</button>
-    </div>
+    </form>
   </div>
 </template>
 

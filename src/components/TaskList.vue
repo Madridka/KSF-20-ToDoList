@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="incompletedTasks">
-      <h3>СДЕЛАТЬ:</h3>
-      <ul>
-
-      </ul>
-    </div>
-
-    <div class="completed-tasks">
-      <h3>ЗАВЕРШЕНО:</h3>
-    </div>
+    <h3>{{ title }}:</h3>
+    <ul>
+      <TaskItem
+        v-for="task in tasks"
+        :key="task.id"
+        :task="task"
+        @edit-task="editTask"
+        @delete-task="deleteTask"
+      />
+    </ul>
   </div>
 </template>
 
@@ -25,18 +25,16 @@ export default {
     tasks: {
       type: Array,
     },
+    title: {
+      type: String,
+    },
   },
   methods: {
+    editTask(id) {
+      this.$emit("edit-task", id);
+    },
     deleteTask(id) {
       this.$emit("delete-task", id);
-    },
-  },
-  computed: {
-    activeTasks() {
-      return this.tasks.filter((task) => !task.completed);
-    },
-    completedTasks() {
-      return this.tasks.filter((task) => !task.completed);
     },
   },
 };

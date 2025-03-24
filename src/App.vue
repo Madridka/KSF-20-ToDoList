@@ -3,12 +3,13 @@
     <title>Todo App</title>
 
     <div class="aaa">
-      <img :src="require('@/assets/eisenhower-matrix.jpg')" />
+      <img :src="require('@/assets/eisenhower-matrix.jpg')"/>
     </div>
     <div class="centered-main-page-element">
-      <TaskInput @task-added="addNewTask"></TaskInput>
-      <TaskList :tasks="tasks" @delete-task="deleteTask"></TaskList>
-      <TaskItem :tasks="tasks"></TaskItem>
+      <TaskInput @task-added="addNewTask"/>
+
+      <TaskList :tasks="tasksIncomplete" title="Сделать" @edit-task="editTask" @delete-task="deleteTask"/>
+      <TaskList :tasks="tasksComplete" title="Завершено" @edit-task="editTask" @delete-task="deleteTask"/>
     </div>
   </div>
 </template>
@@ -16,23 +17,25 @@
 <script>
 import TaskInput from "./components/TaskInput.vue";
 import TaskList from "./components/TaskList.vue";
-import TaskItem from "./components/TaskItem.vue";
 
 export default {
   name: "App",
   components: {
-    TaskInput, 
+    TaskInput,
     TaskList,
-    TaskItem,
   },
 
   data() {
     return {
       tasks: [
-        {id: 1, todo: "Погулять с собакой", completed: false},
-        {id: 2, todo: "Выпить кофе", completed: true},
-        {id: 3, todo: "Купить сахар", completed: true},
-        ],
+        { id: 1, todo: "Погулять с собакой", completed: false },
+        { id: 2, todo: "Выпить кофе", completed: false },
+        { id: 3, todo: "Купить сахар", completed: true },
+      ],
+
+      editingId: null,
+      editTodo: "",
+      editCompleted: "",
     };
   },
 
@@ -44,9 +47,18 @@ export default {
         completed: false,
       });
     },
+
     deleteTask(id) {
-      this.tasks = this.tasks.filter(task => task.id !== id);
-    }
+      this.tasks = this.tasks.filter((task) => task.id !== id);
+    },
+  },
+  computed: {
+    tasksIncomplete() {
+      return this.tasks.filter((task) => !task.completed);
+    },
+    tasksComplete() {
+      return this.tasks.filter((task) => task.completed);
+    },
   },
 };
 </script>
