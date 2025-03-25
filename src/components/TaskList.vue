@@ -6,8 +6,8 @@
         v-for="task in tasks"
         :key="task.id"
         :task="task"
-        @edit-task="editTask"
         @delete-task="deleteTask"
+        @update-task="$emit('update-task', $event)"
       />
     </ul>
   </div>
@@ -30,9 +30,6 @@ export default {
     },
   },
   methods: {
-    editTask(id) {
-      this.$emit("edit-task", id);
-    },
     deleteTask(id) {
       this.$emit("delete-task", id);
     },

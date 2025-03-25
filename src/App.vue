@@ -2,14 +2,25 @@
   <div id="app">
     <title>Todo App</title>
 
-    <div class="aaa">
-      <img :src="require('@/assets/eisenhower-matrix.jpg')"/>
+    <div class="container">
+      <img :src="require('@/assets/eisenhower-matrix.jpg')" />
     </div>
     <div class="centered-main-page-element">
-      <TaskInput @task-added="addNewTask"/>
+      <TaskInput @task-added="addNewTask" />
 
-      <TaskList :tasks="tasksIncomplete" title="Сделать" @edit-task="editTask" @delete-task="deleteTask"/>
-      <TaskList :tasks="tasksComplete" title="Завершено" @edit-task="editTask" @delete-task="deleteTask"/>
+      <TaskList
+        :tasks="tasksIncomplete"
+        title="Сделать"
+        @delete-task="deleteTask"
+        @update-task="updateTask"
+      />
+      <TaskList
+        class="completed-tasks"
+        :tasks="tasksComplete"
+        title="Завершено"
+        @delete-task="deleteTask"
+        @update-task="updateTask"
+      />
     </div>
   </div>
 </template>
@@ -28,14 +39,10 @@ export default {
   data() {
     return {
       tasks: [
-        { id: 1, todo: "Погулять с собакой", completed: false },
-        { id: 2, todo: "Выпить кофе", completed: false },
-        { id: 3, todo: "Купить сахар", completed: true },
+        { id: 1, task: "Погулять с собакой", completed: false },
+        { id: 2, task: "Выпить кофе", completed: false },
+        { id: 3, task: "Купить сахар", completed: true },
       ],
-
-      editingId: null,
-      editTodo: "",
-      editCompleted: "",
     };
   },
 
@@ -43,9 +50,16 @@ export default {
     addNewTask(task) {
       this.tasks.push({
         id: Date.now(),
-        todo: task,
+        task: task,
         completed: false,
       });
+    },
+
+    updateTask(updatedTask) {
+      const index = this.tasks.findIndex((task) => task.id === updatedTask.id);
+      if (index !== -1) {
+        this.$set(this.tasks, index, { ...updatedTask });
+      }
     },
 
     deleteTask(id) {

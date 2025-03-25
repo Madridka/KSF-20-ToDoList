@@ -1,23 +1,15 @@
 <template>
   <div>
-    <div v-if="editingId !== task.id">
-      <li>
-        <input type="checkbox" v-model="task.completed" />
-        <div class="task">
-          {{ task.todo }}
-        </div>
-        <button class="edit" @click="editTask(task.id)">Изменить</button>
-        <button class="delete" @click="deleteTask(task.id)">
-          <img :src="require('@/assets/remove.svg')" alt="Delete task" />
-        </button>
-      </li>
-    </div>
-    <div v-else>
-      <input type="text" v-model="editTodo" />
-      <input type="checkbox" v-model="editCompleted" />
-      <!-- <button class="btn btn-save" @click="saveEdit">Сохранить</button>
-      <button class="btn btn-cancel" @click="cancelEdit">Отмена</button> -->
-    </div>
+    <li>
+      <input type="checkbox" :checked="task.completed" @change="handleChange" />
+      <div class="task">
+        {{ task.task }}
+      </div>
+      <button class="edit" @click="editTask(task.id)">Изменить</button>
+      <button class="delete" @click="deleteTask(task.id)">
+        <img :src="require('@/assets/remove.svg')" alt="Delete task" />
+      </button>
+    </li>
   </div>
 </template>
 
@@ -26,7 +18,8 @@ export default {
   name: "TaskItem",
 
   data() {
-    return {};
+    return {
+    };
   },
   props: {
     task: {
@@ -34,9 +27,15 @@ export default {
     },
   },
   methods: {
+    handleChange(event) {
+      const updatedTask = {...this.task, completed: event.target.checked}
+      this.$emit('update-task', updatedTask)
+    },
+
     editTask(id) {
       this.$emit("edit-task", id);
     },
+
     deleteTask(id) {
       this.$emit("delete-task", id);
     },
