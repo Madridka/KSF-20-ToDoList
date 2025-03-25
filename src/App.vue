@@ -11,6 +11,11 @@
       <TaskList
         :tasks="tasksIncomplete"
         title="Сделать"
+        :editingId="editingId"
+        :editingTask="editingTask"
+        @start-edit="startEdit"
+        @save-edit="saveEdit"
+        @cancel-edit="cancelEdit"
         @delete-task="deleteTask"
         @update-task="updateTask"
       />
@@ -18,6 +23,11 @@
         class="completed-tasks"
         :tasks="tasksComplete"
         title="Завершено"
+        :editingId="editingId"
+        :editingTask="editingTask"
+        @start-edit="startEdit"
+        @save-edit="saveEdit"
+        @cancel-edit="cancelEdit"
         @delete-task="deleteTask"
         @update-task="updateTask"
       />
@@ -43,6 +53,9 @@ export default {
         { id: 2, task: "Выпить кофе", completed: false },
         { id: 3, task: "Купить сахар", completed: true },
       ],
+
+      editingId: null,
+      editingTask: "",
     };
   },
 
@@ -61,6 +74,32 @@ export default {
         this.$set(this.tasks, index, { ...updatedTask });
       }
     },
+
+    startEdit(id) {
+      const task = this.tasks.find((p) => p.id === id);
+      this.editingId = id;
+      this.editingTask = task.task;
+      console.log("startEdit set editingId:", this.editingId);
+    },
+
+    saveEdit(updateTask) {
+      console.log("App saveEdit received:", updateTask);
+      const index = this.tasks.findIndex((p) => p.id === this.editingId);
+      if (index !== -1) {
+        this.tasks[index] = {
+          id: this.editingId,
+          task: updateTask.task,
+          completed: this.tasks[index].completed
+        };
+      }
+      this.cancelEdit();
+    },
+
+    cancelEdit() {
+      this.editingId = null;
+      this.editingTask = "";
+    },
+
 
     deleteTask(id) {
       this.tasks = this.tasks.filter((task) => task.id !== id);

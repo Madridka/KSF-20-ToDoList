@@ -1,14 +1,25 @@
 <template>
   <div>
     <li>
-      <input type="checkbox" :checked="task.completed" @change="handleChange" />
-      <div class="task">
-        {{ task.task }}
+      <div class="task" v-if="editingId !== task.id">
+        <input
+          type="checkbox"
+          :checked="task.completed"
+          @change="handleChange"
+        />
+        <div class="task">
+          {{ task.task }}
+        </div>
+        <button class="edit" @click="startEdit(task.id)">Изменить</button>
+        <button class="delete" @click="deleteTask(task.id)">
+          <img :src="require('@/assets/remove.svg')" alt="Delete task" />
+        </button>
       </div>
-      <button class="edit" @click="editTask(task.id)">Изменить</button>
-      <button class="delete" @click="deleteTask(task.id)">
-        <img :src="require('@/assets/remove.svg')" alt="Delete task" />
-      </button>
+      <div v-else>
+        <input type="text" v-model="localEditTask" placeholder="Название" />
+        <button class="btn btn-save" @click="saveEdit">Сохранить</button>
+        <button class="btn btn-cancel" @click="cancelEdit">Отмена</button>
+      </div>
     </li>
   </div>
 </template>
@@ -19,25 +30,53 @@ export default {
 
   data() {
     return {
+      localEditTask: "",
     };
   },
+
   props: {
     task: {
       type: Object,
     },
+    editingId: {
+      type: Number,
+      default: null,
+    },
+    editingTask: {
+      type: String,
+      default: "",
+    },
   },
+
   methods: {
     handleChange(event) {
-      const updatedTask = {...this.task, completed: event.target.checked}
-      this.$emit('update-task', updatedTask)
+      const updatedTask = { ...this.task, completed: event.target.checked };
+      this.$emit("update-task", updatedTask);
+    },
+    startEdit(id) {
+      this.localEditTask = this.task.task;
+      this.$emit("start-edit", id);
+      
+    },
+    saveEdit() {
+      console.log("TaskItem saveEdit:", this.localEditTask);
+      this.$emit("save-edit", {
+        task: this.localEditTask,
+      });
     },
 
-    editTask(id) {
-      this.$emit("edit-task", id);
+    cancelEdit() {
+      this.$emit("cancel-edit");
     },
 
     deleteTask(id) {
       this.$emit("delete-task", id);
+    },
+  },
+
+  watch: {
+    editingTask(newVal) {
+      this.localEditTask = newVal;
     },
   },
 };

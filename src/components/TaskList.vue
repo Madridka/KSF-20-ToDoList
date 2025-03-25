@@ -6,6 +6,11 @@
         v-for="task in tasks"
         :key="task.id"
         :task="task"
+        :editingId="editingId"
+        :editingTask="editingTask"
+        @start-edit="$emit('start-edit', $event)"
+        @save-edit="$emit('save-edit', $event)"
+        @cancel-edit="$emit('cancel-edit', $event)"
         @delete-task="deleteTask"
         @update-task="$emit('update-task', $event)"
       />
@@ -27,6 +32,14 @@ export default {
     },
     title: {
       type: String,
+    },
+    editingId: {
+      type: Number,
+      default: null
+    },
+    editingTask: {
+      type: String,
+      default: ""
     },
   },
   methods: {
