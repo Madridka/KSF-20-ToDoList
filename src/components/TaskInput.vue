@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="centered-main-page-element">
     <label for="new-task">Список дел</label>
     <form class="task-row-wrapper" @submit.prevent="addTask">
         <input id='new-task' class="task" v-model="newTask" type="text">

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="editMode">
     <li>
       <div class="task" v-if="editingId !== task.id">
         <input
@@ -16,10 +16,13 @@
         </button>
       </div>
       <div v-else>
-        <input type="text" v-model="localEditTask" placeholder="Название" />
+        <li>
+        <input type="text" class="task" v-model="localEditTask" placeholder="Название" />
         <button class="btn btn-save" @click="saveEdit">Сохранить</button>
         <button class="btn btn-cancel" @click="cancelEdit">Отмена</button>
+        </li>
       </div>
+      
     </li>
   </div>
 </template>

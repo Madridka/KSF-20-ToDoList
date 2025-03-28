@@ -79,18 +79,17 @@ export default {
       const task = this.tasks.find((p) => p.id === id);
       this.editingId = id;
       this.editingTask = task.task;
-      console.log("startEdit set editingId:", this.editingId);
     },
 
     saveEdit(updateTask) {
-      console.log("App saveEdit received:", updateTask);
       const index = this.tasks.findIndex((p) => p.id === this.editingId);
       if (index !== -1) {
-        this.tasks[index] = {
+        const editedTask = {
           id: this.editingId,
           task: updateTask.task,
-          completed: this.tasks[index].completed
+          completed: this.tasks[index].completed,
         };
+        this.tasks.splice(index, 1, editedTask);
       }
       this.cancelEdit();
     },
@@ -99,7 +98,6 @@ export default {
       this.editingId = null;
       this.editingTask = "";
     },
-
 
     deleteTask(id) {
       this.tasks = this.tasks.filter((task) => task.id !== id);
