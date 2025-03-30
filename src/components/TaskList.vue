@@ -1,5 +1,5 @@
 <template>
-  <div class="centered-main-page-element">
+  <div>
     <h3>{{ title }}:</h3>
     <ul>
       <TaskItem

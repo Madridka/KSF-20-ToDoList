@@ -1,5 +1,5 @@
 <template>
-  <div class="editMode">
+  <div>
     <li>
       <div class="task" v-if="editingId !== task.id">
         <input
