@@ -1,9 +1,8 @@
 <template>
-  <div class="centered-main-page-element">
-    <label for="new-task">Список дел</label>
-    <form class="task-row-wrapper" @submit.prevent="addTask">
-        <input id='new-task' class="task" v-model="newTask" type="text">
-        <button @click="addTask">Доб.</button>
+  <div class="new__task">
+    <form @submit.prevent="addTask">
+        <input id='new-task' v-model="newTask" type="text" placeholder="Добавить задачу">
+        <button class="btn btn-add" @click="addTask">Доб.</button>
     </form>
   </div>
 </template>
@@ -25,3 +24,6 @@ export default {
   }
 };
 </script>
+
+<style >
+</style>

@@ -1,20 +1,21 @@
 <template>
   <div>
-    <h3>{{ title }}:</h3>
-    <ul>
-      <TaskItem
-        v-for="task in tasks"
-        :key="task.id"
-        :task="task"
-        :editingId="editingId"
-        :editingTask="editingTask"
-        @start-edit="$emit('start-edit', $event)"
-        @save-edit="$emit('save-edit', $event)"
-        @cancel-edit="$emit('cancel-edit', $event)"
-        @delete-task="deleteTask"
-        @update-task="$emit('update-task', $event)"
-      />
-    </ul>
+    <div class="task">
+      <ul>
+        <TaskItem
+          v-for="task in tasks"
+          :key="task.id"
+          :task="task"
+          :editingId="editingId"
+          :editingTask="editingTask"
+          @start-edit="$emit('start-edit', $event)"
+          @save-edit="$emit('save-edit', $event)"
+          @cancel-edit="$emit('cancel-edit', $event)"
+          @delete-task="deleteTask"
+          @update-task="$emit('update-task', $event)"
+        />
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -35,11 +36,11 @@ export default {
     },
     editingId: {
       type: Number,
-      default: null
+      default: null,
     },
     editingTask: {
       type: String,
-      default: ""
+      default: "",
     },
   },
   methods: {

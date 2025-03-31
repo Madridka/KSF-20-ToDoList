@@ -1,16 +1,12 @@
 <template>
   <div id="app">
-    <title>Todo App</title>
-
     <div class="container">
-      <img :src="require('@/assets/eisenhower-matrix.jpg')" />
-    </div>
-    <div class="centered-main-page-element">
       <TaskInput @task-added="addNewTask" />
+
+      <UsersForm @active-user="activeUsers" />
 
       <TaskList
         :tasks="tasksIncomplete"
-        title="Сделать"
         :editingId="editingId"
         :editingTask="editingTask"
         @start-edit="startEdit"
@@ -22,7 +18,6 @@
       <TaskList
         class="completed-tasks"
         :tasks="tasksComplete"
-        title="Завершено"
         :editingId="editingId"
         :editingTask="editingTask"
         @start-edit="startEdit"
@@ -38,24 +33,33 @@
 <script>
 import TaskInput from "./components/TaskInput.vue";
 import TaskList from "./components/TaskList.vue";
+import UsersForm from "./components/UsersForm.vue";
+// import TodosForm from "./components/TodosForm.vue";
+
+import "./assets/styles/styles.scss";
 
 export default {
   name: "App",
   components: {
     TaskInput,
     TaskList,
+    UsersForm,
+    // TodosForm,
   },
 
   data() {
     return {
-      tasks: [
-        { id: 1, task: "Погулять с собакой", completed: false },
-        { id: 2, task: "Выпить кофе", completed: false },
-        { id: 3, task: "Купить сахар", completed: true },
-      ],
+      // tasks: [
+      //   { id: 1, task: "Погулять с собакой", completed: false },
+      //   { id: 2, task: "Выпить кофе", completed: false },
+      //   { id: 3, task: "Купить сахар", completed: true },
+      // ],
 
       editingId: null,
       editingTask: "",
+
+      activeUserNumber: 1,
+      tasks: [],
     };
   },
 
@@ -63,7 +67,7 @@ export default {
     addNewTask(task) {
       this.tasks.push({
         id: Date.now(),
-        task: task,
+        title: task,
         completed: false,
       });
     },
@@ -102,7 +106,25 @@ export default {
     deleteTask(id) {
       this.tasks = this.tasks.filter((task) => task.id !== id);
     },
+
+    activeUsers(activeUsers) {
+      this.activeUserNumber = activeUsers;
+    },
+
+    async fetch() {
+      try {
+        const responseTodo = await fetch(
+          "https://jsonplaceholder.typicode.com/users/" +
+            this.activeUserNumber +
+            "/todos"
+        );
+        this.tasks = await responseTodo.json();
+      } catch (error) {
+        console.log("Ошибка при загрузке данных");
+      }
+    },
   },
+
   computed: {
     tasksIncomplete() {
       return this.tasks.filter((task) => !task.completed);
@@ -111,9 +133,17 @@ export default {
       return this.tasks.filter((task) => task.completed);
     },
   },
+
+  mounted() {
+    this.fetch();
+  },
+  watch: {
+    activeUserNumber() {
+      this.fetch();
+    },
+  },
 };
 </script>
 
 <style>
-@import "./assets/style.css";
 </style>

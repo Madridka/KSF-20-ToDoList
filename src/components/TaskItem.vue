@@ -1,33 +1,30 @@
 <template>
   <div>
     <li>
-      <div class="task" v-if="editingId !== task.id">
+      <button :disabled="true" class="btn btn-edit" @click="startEdit(task.id)">Изм.</button>
+      <button class="btn btn-delete" @click="deleteTask(task.id)">X</button>
+      <div v-if="editingId !== task.id">
         <input
           type="checkbox"
           :checked="task.completed"
           @change="handleChange"
         />
-        <div class="task">
-          {{ task.task }}
-        </div>
-        <button class="edit" @click="startEdit(task.id)">Изменить</button>
-        <button class="delete" @click="deleteTask(task.id)">
-          <img :src="require('@/assets/remove.svg')" alt="Delete task" />
-        </button>
+        {{ task.title }}
       </div>
       <div v-else>
         <li>
-        <input type="text" class="task" v-model="localEditTask" placeholder="Название" />
-        <button class="btn btn-save" @click="saveEdit">Сохранить</button>
-        <button class="btn btn-cancel" @click="cancelEdit">Отмена</button>
+          <input type="text" v-model="localEditTask" placeholder="Название" />
+          <button class="btn" @click="saveEdit">Сохранить</button>
+          <button class="btn" @click="cancelEcdit">Отмена</button>
         </li>
       </div>
-      
     </li>
   </div>
 </template>
 
 <script>
+import "../assets/styles/styles.scss";
+
 export default {
   name: "TaskItem",
 
@@ -56,10 +53,10 @@ export default {
       const updatedTask = { ...this.task, completed: event.target.checked };
       this.$emit("update-task", updatedTask);
     },
-    startEdit(id) {
-      this.localEditTask = this.task.task;
-      this.$emit("start-edit", id);
-      
+    startEdit() {
+      // this.localEditTask = this.task.task;
+      // this.$emit("start-edit", id);
+      window.confirm("Нельзя редактировать");
     },
     saveEdit() {
       console.log("TaskItem saveEdit:", this.localEditTask);
