@@ -3,7 +3,7 @@
     <title>Todo App</title>
 
     <div class="container">
-      <img :src="require('@/assets/eisenhower-matrix.jpg')" />
+      <img :src="require('@/assets/eisenhower-matrix.jpg')" alt="Матрица Эйзенхауэра"/>
     </div>
     <div class="centered-main-page-element">
       <TaskInput @task-added="addNewTask" />
@@ -20,8 +20,8 @@
         @update-task="updateTask"
       />
       <TaskList
-        class="completed-tasks"
         :tasks="tasksComplete"
+        class="completed-tasks"
         title="Завершено"
         :editingId="editingId"
         :editingTask="editingTask"

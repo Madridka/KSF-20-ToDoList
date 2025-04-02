@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <ul>
     <li>
       <div class="task" v-if="editingId !== task.id">
         <input
@@ -7,24 +7,30 @@
           :checked="task.completed"
           @change="handleChange"
         />
-        <div class="task">
+        <label class="task">
           {{ task.task }}
-        </div>
+        </label>
+
         <button class="edit" @click="startEdit(task.id)">Изменить</button>
         <button class="delete" @click="deleteTask(task.id)">
           <img :src="require('@/assets/remove.svg')" alt="Delete task" />
         </button>
       </div>
-      <div v-else>
-        <li>
-        <input type="text" class="task" v-model="localEditTask" placeholder="Название" />
-        <button class="btn btn-save" @click="saveEdit">Сохранить</button>
-        <button class="btn btn-cancel" @click="cancelEdit">Отмена</button>
-        </li>
+      <div class="editMode" v-else>
+        <input
+          type="checkbox"
+          :checked="task.completed"
+          @change="handleChange"
+        />
+        <input type="text" v-model="localEditTask" placeholder="Название" />
+        <label>
+          {{ task.task }}
+        </label>
+        <button class="edit" @click="saveEdit">Сохр.</button>
+        <button class="delete" @click="cancelEdit">Отмена</button>
       </div>
-      
     </li>
-  </div>
+  </ul>
 </template>
 
 <script>
@@ -59,7 +65,6 @@ export default {
     startEdit(id) {
       this.localEditTask = this.task.task;
       this.$emit("start-edit", id);
-      
     },
     saveEdit() {
       console.log("TaskItem saveEdit:", this.localEditTask);
