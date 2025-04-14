@@ -28,6 +28,9 @@ export const store = new Vuex.Store({
         changeActiveUser(state, payload) {
             state.activeUser = payload
         },
+        addTodo: (state, payload) => {
+            state.todos.push(payload)
+        },
     },
     actions: {
         async getTodo({ commit }) {
@@ -42,6 +45,9 @@ export const store = new Vuex.Store({
         },
         changeActiveUser({ commit }, payload) {
             commit("changeActiveUser", payload)
+        },
+        addTodo({ commit }, payload) {
+            commit("addTodo", payload)
         },
     }
 })
