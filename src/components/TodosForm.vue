@@ -12,16 +12,17 @@
 <script>
 export default {
   name: "TodosForm",
-  data() {
-    return {
-      todos: [],
-    };
-  },
+
   props: {
     activeUserNumber: {
       type: Number,
       required: true,
     },
+  },
+  data() {
+    return {
+      todos: [],
+    };
   },
   watch: {
     activeUserNumber() {
@@ -45,7 +46,6 @@ export default {
       }
     },
   },
-
 };
 </script>
 

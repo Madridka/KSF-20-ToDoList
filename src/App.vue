@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id>
     <div class="container">
       <TaskInput @task-added="addNewTask" />
 
@@ -34,33 +34,43 @@
 import TaskInput from "./components/TaskInput.vue";
 import TaskList from "./components/TaskList.vue";
 import UsersForm from "./components/UsersForm.vue";
-// import TodosForm from "./components/TodosForm.vue";
-
-import "./assets/styles/styles.scss";
 
 export default {
   name: "App",
+
   components: {
     TaskInput,
     TaskList,
     UsersForm,
-    // TodosForm,
   },
 
   data() {
     return {
-      // tasks: [
-      //   { id: 1, task: "Погулять с собакой", completed: false },
-      //   { id: 2, task: "Выпить кофе", completed: false },
-      //   { id: 3, task: "Купить сахар", completed: true },
-      // ],
-
       editingId: null,
       editingTask: "",
 
       activeUserNumber: 1,
       tasks: [],
     };
+  },
+
+  computed: {
+    tasksIncomplete() {
+      return this.tasks.filter((task) => !task.completed);
+    },
+    tasksComplete() {
+      return this.tasks.filter((task) => task.completed);
+    },
+  },
+
+  watch: {
+    activeUserNumber() {
+      this.fetch();
+    },
+  },
+
+  mounted() {
+    this.fetch();
   },
 
   methods: {
@@ -122,24 +132,6 @@ export default {
       } catch (error) {
         console.log("Ошибка при загрузке данных");
       }
-    },
-  },
-
-  computed: {
-    tasksIncomplete() {
-      return this.tasks.filter((task) => !task.completed);
-    },
-    tasksComplete() {
-      return this.tasks.filter((task) => task.completed);
-    },
-  },
-
-  mounted() {
-    this.fetch();
-  },
-  watch: {
-    activeUserNumber() {
-      this.fetch();
     },
   },
 };

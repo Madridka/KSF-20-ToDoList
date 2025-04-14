@@ -1,7 +1,9 @@
 <template>
   <div>
     <li>
-      <button :disabled="true" class="btn btn-edit" @click="startEdit(task.id)">Изм.</button>
+      <button :disabled="true" class="btn btn-edit" @click="startEdit(task.id)">
+        Изм.
+      </button>
       <button class="btn btn-delete" @click="deleteTask(task.id)">X</button>
       <div v-if="editingId !== task.id">
         <input
@@ -23,16 +25,8 @@
 </template>
 
 <script>
-import "../assets/styles/styles.scss";
-
 export default {
   name: "TaskItem",
-
-  data() {
-    return {
-      localEditTask: "",
-    };
-  },
 
   props: {
     task: {
@@ -48,14 +42,24 @@ export default {
     },
   },
 
+  data() {
+    return {
+      localEditTask: "",
+    };
+  },
+
+  watch: {
+    editingTask(newVal) {
+      this.localEditTask = newVal;
+    },
+  },
+
   methods: {
     handleChange(event) {
       const updatedTask = { ...this.task, completed: event.target.checked };
       this.$emit("update-task", updatedTask);
     },
     startEdit() {
-      // this.localEditTask = this.task.task;
-      // this.$emit("start-edit", id);
       window.confirm("Нельзя редактировать");
     },
     saveEdit() {
@@ -64,19 +68,11 @@ export default {
         task: this.localEditTask,
       });
     },
-
     cancelEdit() {
       this.$emit("cancel-edit");
     },
-
     deleteTask(id) {
       this.$emit("delete-task", id);
-    },
-  },
-
-  watch: {
-    editingTask(newVal) {
-      this.localEditTask = newVal;
     },
   },
 };

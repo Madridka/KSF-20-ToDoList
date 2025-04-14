@@ -17,7 +17,7 @@ export default {
       activeUser: 1,
     };
   },
-  props: {},
+
   watch: {
     activeUser(newValue) {
       this.$emit("active-user", newValue);
@@ -34,12 +34,11 @@ export default {
         );
         this.users = await responseUsers.json();
       } catch (error) {
-        console.log("Ошибка при загрузке данных");
+        window.alert("Ошибка при загрузке данных");
       }
     },
 
     activeUserToApp() {
-      console.log('Выбран пользователь:', this.activeUser.id);
       this.$emit("active-user", this.activeUser.id);
     },
   },
@@ -47,5 +46,17 @@ export default {
 </script>
 
 
-<style>
+<style lang="scss" scoped>
+.user__select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 20px;
+
+  select {
+    font-size: 15px;
+    border-radius: 18px;
+  }
+}
 </style>
