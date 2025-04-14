@@ -2,7 +2,6 @@
   <div>
     <div v-for="item in todoList" :key="item.id">
       <input type="checkbox" :checked="item.completed" />{{ item.title }}
-      <btnAction :todo="item" @start-edit="startEdit" />
     </div>
   </div>
 </template>
