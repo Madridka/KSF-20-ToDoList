@@ -43,7 +43,7 @@ export default {
       default: "",
     },
   },
-  
+
   methods: {
     deleteTask(id) {
       this.$emit("delete-task", id);

@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 export default {
   name: "UsersForm",
   data() {
@@ -22,6 +24,9 @@ export default {
     activeUser(newValue) {
       this.$emit("active-user", newValue);
     },
+  },
+  created() {
+    this.activeUserToApp = _.throttle(this.activeUserToApp, 1000);
   },
   mounted() {
     this.fetch();

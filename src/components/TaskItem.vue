@@ -63,7 +63,6 @@ export default {
       window.confirm("Нельзя редактировать");
     },
     saveEdit() {
-      console.log("TaskItem saveEdit:", this.localEditTask);
       this.$emit("save-edit", {
         task: this.localEditTask,
       });

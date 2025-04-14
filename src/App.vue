@@ -4,28 +4,32 @@
       <TaskInput @task-added="addNewTask" />
 
       <UsersForm @active-user="activeUsers" />
-
-      <TaskList
-        :tasks="tasksIncomplete"
-        :editingId="editingId"
-        :editingTask="editingTask"
-        @start-edit="startEdit"
-        @save-edit="saveEdit"
-        @cancel-edit="cancelEdit"
-        @delete-task="deleteTask"
-        @update-task="updateTask"
-      />
-      <TaskList
-        class="completed-tasks"
-        :tasks="tasksComplete"
-        :editingId="editingId"
-        :editingTask="editingTask"
-        @start-edit="startEdit"
-        @save-edit="saveEdit"
-        @cancel-edit="cancelEdit"
-        @delete-task="deleteTask"
-        @update-task="updateTask"
-      />
+      <div v-if="tasks.length === 0">
+        <h3>Загрузка...</h3>
+      </div>
+      <div v-else>
+        <TaskList
+          :tasks="tasksIncomplete"
+          :editingId="editingId"
+          :editingTask="editingTask"
+          @start-edit="startEdit"
+          @save-edit="saveEdit"
+          @cancel-edit="cancelEdit"
+          @delete-task="deleteTask"
+          @update-task="updateTask"
+        />
+        <TaskList
+          class="completed-tasks"
+          :tasks="tasksComplete"
+          :editingId="editingId"
+          :editingTask="editingTask"
+          @start-edit="startEdit"
+          @save-edit="saveEdit"
+          @cancel-edit="cancelEdit"
+          @delete-task="deleteTask"
+          @update-task="updateTask"
+        />
+      </div>
     </div>
   </div>
 </template>
