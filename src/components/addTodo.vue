@@ -3,7 +3,6 @@
     <form type="text" @submit.prevent="addTodo()">
       <input type="text" v-model.lazy="todo" />
     </form>
-    {{ todo }}
   </div>
 </template>
 

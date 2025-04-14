@@ -1,15 +1,16 @@
 <template>
   <div>
     <div v-for="item in todoList" :key="item.id">
-              <div v-if="editingId !== item.id">
-          <input type="checkbox" :checked="item.completed" />{{ item.title }}
-          <Button :todo="item" @start-edit="startEdit" />
-        </div>
-        <div v-else>
-          <input type="text" v-model="editingTask.title" placeholder="Дело" />
-          <button @click="saveEdit">Сохранить</button>
-          <button @click="cancelEdit">Отмена</button>
-        </div>
+      <div v-if="editingId !== item.id">
+        <input type="checkbox" :checked="item.completed" />{{ item.title }}
+        <Button @click="deleteTask(item)">DEL</Button>
+        <Button @click="startEdit(item)">EDIT</Button>
+      </div>
+      <div v-else>
+        <input type="text" v-model="editingTask.title" placeholder="Дело" />
+        <Button @click="saveEdit">Сохранить</Button>
+        <Button @click="cancelEdit">Отмена</Button>
+      </div>
     </div>
   </div>
 </template>
@@ -29,9 +30,12 @@ export default {
     };
   },
   methods: {
-    startEdit(todo) {
-      this.editingId = todo.id;
-      this.editingTask = { ...todo };
+    deleteTask(item) {
+      this.$store.dispatch("deleteTask", item);
+    },
+    startEdit(item) {
+      this.editingId = item.id;
+      this.editingTask = { ...item };
     },
     saveEdit() {
       this.$store.dispatch("updateTask", this.editingTask);
