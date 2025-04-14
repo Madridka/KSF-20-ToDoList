@@ -20,15 +20,28 @@ import Button from "../ui/Button.vue";
 
 export default {
   name: "todosList",
+
   components: {
     Button,
   },
+
   data() {
     return {
       editingId: null,
       editingTask: "",
     };
   },
+
+  computed: {
+    todoList() {
+      return this.$store.getters.TODOS;
+    },
+  },
+
+  created() {
+    this.$store.dispatch("getTodo");
+  },
+
   methods: {
     deleteTask(item) {
       this.$store.dispatch("deleteTask", item);
@@ -46,14 +59,6 @@ export default {
       this.editingId = null;
       this.editingTask = { title: "", completed: false };
     },
-  },
-  computed: {
-    todoList() {
-      return this.$store.getters.TODOS;
-    },
-  },
-  created() {
-    this.$store.dispatch("getTodo");
   },
 };
 </script>

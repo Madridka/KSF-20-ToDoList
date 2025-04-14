@@ -13,23 +13,28 @@
 <script>
 export default {
   name: "selectUsers",
+
   components: {},
+
   data() {
     return {
       activeUser: null,
     };
   },
+
   computed: {
     usersList() {
       return this.$store.getters.USERS;
     },
   },
+
   created() {
     this.$store.dispatch("getUsers");
   },
   updated() {
     this.$store.dispatch("getTodo");
   },
+  
   methods: {
     changeActiveUser(event) {
       const userId = event.target.value;

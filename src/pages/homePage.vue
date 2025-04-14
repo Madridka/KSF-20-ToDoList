@@ -15,11 +15,13 @@ import addTodo from "../components/addTodo.vue";
 
 export default {
   name: "homePage",
+
   components: {
     todosList,
     selectUsers,
     addTodo,
   },
+  
   data() {
     return {};
   },
