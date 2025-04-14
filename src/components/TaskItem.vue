@@ -11,8 +11,8 @@
           {{ task.task }}
         </label>
 
-        <button class="edit" @click="startEdit(task.id)">Изменить</button>
-        <button class="delete" @click="deleteTask(task.id)">
+        <button class="btn-edit" @click="startEdit(task.id)">Изменить</button>
+        <button class="btn-del" @click="deleteTask(task.id)">
           <img :src="require('@/assets/remove.svg')" alt="Delete task" />
         </button>
       </div>
@@ -26,8 +26,8 @@
         <label>
           {{ task.task }}
         </label>
-        <button class="edit" @click="saveEdit">Сохр.</button>
-        <button class="delete" @click="cancelEdit">Отмена</button>
+        <button class="btn-edit" @click="saveEdit">Сохр.</button>
+        <button class="btn btn-del" @click="cancelEdit">Отмена</button>
       </div>
     </li>
   </ul>
@@ -50,14 +50,12 @@ export default {
       default: "",
     },
   },
-  
+
   data() {
     return {
       localEditTask: "",
     };
   },
-
-
 
   watch: {
     editingTask(newVal) {
@@ -92,5 +90,73 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.task {
+  width: 71%;
+  display: inline-block;
+  flex-grow: 1;
+}
+
+.btn {
+  &-del {
+    img {
+      height: 2em;
+      transform: rotateZ(45deg);
+      transition: transform 200ms ease-in;
+    }
+    &:hover img {
+      transform: rotateZ(0);
+    }
+  }
+}
+
+li {
+  overflow: hidden;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+li > * {
+  vertical-align: middle;
+}
+
+li > input[type="checkbox"] {
+  margin: 0 10px;
+}
+li > label {
+  padding-left: 10px;
+  box-sizing: border-box;
+  font-size: 18px;
+  width: 318px;
+}
+li > input[type="text"] {
+  width: 318px;
+}
+ul li label {
+  display: none;
+}
+
+.editMode {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.editMode input[type="text"] {
+  width: 318px;
+  display: inline-block;
+}
+
+ul li.editMode input[type="text"] {
+  display: inline-block;
+}
+
+ul li.editMode label {
+  display: flex;
+  justify-content: end;
+  display: none;
+}
 </style>
