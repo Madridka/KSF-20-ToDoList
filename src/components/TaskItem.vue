@@ -37,12 +37,6 @@
 export default {
   name: "TaskItem",
 
-  data() {
-    return {
-      localEditTask: "",
-    };
-  },
-
   props: {
     task: {
       type: Object,
@@ -54,6 +48,20 @@ export default {
     editingTask: {
       type: String,
       default: "",
+    },
+  },
+  
+  data() {
+    return {
+      localEditTask: "",
+    };
+  },
+
+
+
+  watch: {
+    editingTask(newVal) {
+      this.localEditTask = newVal;
     },
   },
 
@@ -79,12 +87,6 @@ export default {
 
     deleteTask(id) {
       this.$emit("delete-task", id);
-    },
-  },
-
-  watch: {
-    editingTask(newVal) {
-      this.localEditTask = newVal;
     },
   },
 };

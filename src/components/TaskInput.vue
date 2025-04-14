@@ -11,11 +11,13 @@
 <script>
 export default {
   name: "TaskInput",
+
   data() {
     return {
       newTask: ''
     };
   },
+  
   methods: {
     addTask() {
         if (this.newTask.trim() === '') return;

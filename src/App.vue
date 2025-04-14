@@ -3,7 +3,10 @@
     <title>Todo App</title>
 
     <div class="container">
-      <img :src="require('@/assets/eisenhower-matrix.jpg')" alt="Матрица Эйзенхауэра"/>
+      <img
+        :src="require('@/assets/eisenhower-matrix.jpg')"
+        alt="Матрица Эйзенхауэра"
+      />
     </div>
     <div class="centered-main-page-element">
       <TaskInput @task-added="addNewTask" />
@@ -41,6 +44,7 @@ import TaskList from "./components/TaskList.vue";
 
 export default {
   name: "App",
+  
   components: {
     TaskInput,
     TaskList,
@@ -57,6 +61,15 @@ export default {
       editingId: null,
       editingTask: "",
     };
+  },
+
+  computed: {
+    tasksIncomplete() {
+      return this.tasks.filter((task) => !task.completed);
+    },
+    tasksComplete() {
+      return this.tasks.filter((task) => task.completed);
+    },
   },
 
   methods: {
@@ -101,14 +114,6 @@ export default {
 
     deleteTask(id) {
       this.tasks = this.tasks.filter((task) => task.id !== id);
-    },
-  },
-  computed: {
-    tasksIncomplete() {
-      return this.tasks.filter((task) => !task.completed);
-    },
-    tasksComplete() {
-      return this.tasks.filter((task) => task.completed);
     },
   },
 };

@@ -23,9 +23,11 @@ import TaskItem from "./TaskItem.vue";
 
 export default {
   name: "TaskList",
+
   components: {
     TaskItem,
   },
+
   props: {
     tasks: {
       type: Array,
@@ -42,6 +44,7 @@ export default {
       default: ""
     },
   },
+  
   methods: {
     deleteTask(id) {
       this.$emit("delete-task", id);
