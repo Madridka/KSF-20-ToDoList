@@ -1,0 +1,28 @@
+ul {
+    margin: 0;
+    padding: 0px;
+}
+
+li,
+h3 {
+    list-style: none;
+}
+
+input,
+button {
+    outline: none;
+}
+
+button {
+    background: none;
+    border: 0px;
+    color: #888;
+    font-size: 15px;
+    width: 60px;
+    font-family: Lato, sans-serif;
+    cursor: pointer;
+
+    &:hover {
+        color: #3a3A3a;
+    }
+}
