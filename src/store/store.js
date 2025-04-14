@@ -31,6 +31,15 @@ export const store = new Vuex.Store({
         addTodo: (state, payload) => {
             state.todos.push(payload)
         },
+        deleteTask(state, todo) {
+            state.todos = state.todos.filter(item => item.id != todo.id);
+        },
+        updateTask(state, updatedTask) {
+            const index = state.todos.findIndex(item => item.id === updatedTask.id);
+            if (index !== -1) {
+                state.todos.splice(index, 1, updatedTask);
+            }
+        },
     },
     actions: {
         async getTodo({ commit }) {
@@ -48,6 +57,12 @@ export const store = new Vuex.Store({
         },
         addTodo({ commit }, payload) {
             commit("addTodo", payload)
+        },
+        deleteTask({ commit }, payload) {
+            commit("deleteTask", payload)
+        },
+        updateTask({ commit }, payload) {
+            commit('updateTask', payload);
         },
     }
 })

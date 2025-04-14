@@ -1,19 +1,48 @@
 <template>
   <div>
     <div v-for="item in todoList" :key="item.id">
-      <input type="checkbox" :checked="item.completed" />{{ item.title }}
+              <div v-if="editingId !== item.id">
+          <input type="checkbox" :checked="item.completed" />{{ item.title }}
+          <Button :todo="item" @start-edit="startEdit" />
+        </div>
+        <div v-else>
+          <input type="text" v-model="editingTask.title" placeholder="Дело" />
+          <button @click="saveEdit">Сохранить</button>
+          <button @click="cancelEdit">Отмена</button>
+        </div>
     </div>
   </div>
 </template>
 
 <script>
+import Button from "../ui/Button.vue";
+
 export default {
   name: "todosList",
-  components: {},
-  data() {
-    return {};
+  components: {
+    Button,
   },
-  methods: {},
+  data() {
+    return {
+      editingId: null,
+      editingTask: "",
+    };
+  },
+  methods: {
+    startEdit(todo) {
+      this.editingId = todo.id;
+      this.editingTask = { ...todo };
+    },
+    saveEdit() {
+      this.$store.dispatch("updateTask", this.editingTask);
+      this.editingId = null;
+      this.editingTask = { title: "", completed: false };
+    },
+    cancelEdit() {
+      this.editingId = null;
+      this.editingTask = { title: "", completed: false };
+    },
+  },
   computed: {
     todoList() {
       return this.$store.getters.TODOS;
