@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import _ from "lodash";
 
 export default {
   name: "UsersForm",
@@ -26,7 +26,10 @@ export default {
     },
   },
   created() {
-    this.activeUserToApp = _.throttle(this.activeUserToApp, 1000);
+    this.activeUserToApp = _.throttle(this.activeUserToApp, 500, {
+      leading: true,
+      trailing: false,
+    });
   },
   mounted() {
     this.fetch();

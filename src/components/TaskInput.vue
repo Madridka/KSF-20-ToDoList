@@ -7,18 +7,26 @@
         type="text"
         placeholder="Добавить задачу"
       />
-      <button class="btn btn-add" @click="addTask">Доб.</button>
+      <button class="btn btn-add" type="submit">Доб.</button>
     </form>
   </div>
 </template>
 
 <script>
+import _ from "lodash";
+
 export default {
   name: "TaskInput",
   data() {
     return {
       newTask: "",
     };
+  },
+  created() {
+    this.addTask = _.throttle(this.addTask, 2000, {
+      leading: true,
+      trailing: false,
+    });
   },
   methods: {
     addTask() {
