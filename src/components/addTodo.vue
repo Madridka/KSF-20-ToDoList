@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import _ from "lodash";
+
 export default {
   name: "addTodo",
   components: {},
@@ -16,10 +18,18 @@ export default {
       todo: "",
     };
   },
+
   computed: {
     isDisable() {
       return this.todo !== "";
     },
+  },
+
+  created() {
+    this.addTodo = _.throttle(this.addTodo, 2000, {
+      leading: true,
+      trailing: false,
+    });
   },
 
   methods: {

@@ -88,7 +88,6 @@ export default {
   &__item {
     margin: 10px;
     display: flex;
-    // flex-direction: row;
     justify-content: space-between;
     gap: 10px;
     width: 100%;

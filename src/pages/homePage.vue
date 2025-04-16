@@ -33,12 +33,12 @@ export default {
     todoList() {
       return this.$store.getters.TODOS;
     },
-    tasksIncomplete() {
-      return this.todoList.filter((title) => !title.completed);
-    },
-    tasksComplete() {
-      return this.todoList.filter((title) => title.completed);
-    },
+    // tasksIncomplete() {
+    //   return this.todoList.filter((title) => !title.completed);
+    // },
+    // tasksComplete() {
+    //   return this.todoList.filter((title) => title.completed);
+    // },
   },
 };
 </script>

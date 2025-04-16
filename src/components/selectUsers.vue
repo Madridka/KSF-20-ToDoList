@@ -1,15 +1,20 @@
 <template>
   <div>
+    Номер пользователя: {{ $store.state.activeUser }}
+    <br>
     <select @change="changeActiveUser($event)">
       <option v-for="user in usersList" :key="user" :value="user.id">
         {{ user.name }}
       </option>
     </select>
+    
     <br />
   </div>
 </template>
 
 <script>
+import _ from "lodash";
+
 export default {
   name: "selectUsers",
 
@@ -29,6 +34,10 @@ export default {
 
   created() {
     this.$store.dispatch("getUsers");
+    this.changeActiveUser = _.throttle(this.changeActiveUser, 1000, {
+      leading: true,
+      trailing: false,
+    });
   },
   updated() {
     this.$store.dispatch("getTodo");
