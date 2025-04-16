@@ -9,13 +9,20 @@
         <div class="todo__item-title" v-else>
           {{ item.title }}
         </div>
-        <Button class="btn btn-edit" @click="startEdit(item)">EDIT</Button>
-        <Button class="btn btn-del" @click="deleteTask(item)">DEL</Button>
+        <Button class="btn btn-edit" @click="startEdit(item)">Ред.</Button>
+        <Button class="btn btn-del" @click="deleteTask(item)">Удал.</Button>
       </div>
-      <div v-else>
-        <input type="text" v-model="editingTask.title" placeholder="Дело" />
-        <Button @click="saveEdit">Сохранить</Button>
-        <Button @click="cancelEdit">Отмена</Button>
+      <div class="editMode" v-else>
+        <input
+          class="editMode-input"
+          type="text"
+          v-model="editingTask.title"
+          placeholder="Дело"
+        />
+        <Button :disabled="!isDisable" class="btn btn-save" @click="saveEdit"
+          >Сохр.</Button
+        >
+        <Button class="btn btn-edit" @click="cancelEdit">Отм.</Button>
       </div>
     </div>
   </div>
@@ -41,6 +48,9 @@ export default {
   computed: {
     todoList() {
       return this.$store.getters.TODOS;
+    },
+    isDisable() {
+      return this.editingTask.title !== "";
     },
   },
 
@@ -78,7 +88,7 @@ export default {
   &__item {
     margin: 10px;
     display: flex;
-    flex-direction: row;
+    // flex-direction: row;
     justify-content: space-between;
     gap: 10px;
     width: 100%;
@@ -89,9 +99,22 @@ export default {
       text-align: left;
 
       &-completed {
-        text-decoration: line-through 2px;
+        text-decoration: line-through;
       }
     }
+  }
+}
+
+.editMode {
+  border-bottom: 1px solid black;
+  display: flex;
+  flex-direction: row;
+
+  &-input {
+    border-radius: 4px;
+    flex: 1;
+    gap: 10px;
+    margin: 5px;
   }
 }
 </style>

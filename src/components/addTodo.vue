@@ -1,8 +1,8 @@
 <template>
   <div>
     <form class="addTodo" type="text" @submit.prevent="addTodo()">
-      <input type="text" v-model.lazy="todo" />
-      <Button class="btn btn-add"> Сохр. </Button>
+      <input type="text" v-model="todo" />
+      <Button :disabled="!isDisable" class="btn btn-add"> Сохр. </Button>
     </form>
   </div>
 </template>
@@ -16,6 +16,12 @@ export default {
       todo: "",
     };
   },
+  computed: {
+    isDisable() {
+      return this.todo !== "";
+    },
+  },
+
   methods: {
     addTodo() {
       const newTask = {
