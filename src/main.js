@@ -4,6 +4,9 @@ import store from './store/store'
 import router from '@/router/router'
 import VueRouter from 'vue-router'
 
+import "./styles/base.scss"
+import "./styles/normalize.scss"
+
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)

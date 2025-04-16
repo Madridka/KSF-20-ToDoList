@@ -1,12 +1,11 @@
 <template>
-  <div class="hello">
+  <div>
     <select @change="changeActiveUser($event)">
       <option v-for="user in usersList" :key="user" :value="user.id">
         {{ user.name }}
       </option>
     </select>
     <br />
-    {{ $store.state.activeUser }}
   </div>
 </template>
 
@@ -34,7 +33,7 @@ export default {
   updated() {
     this.$store.dispatch("getTodo");
   },
-  
+
   methods: {
     changeActiveUser(event) {
       const userId = event.target.value;

@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <button @click="$emit('click', $event)">
-      <slot>Кнопка</slot>
-    </button>
-  </div>
+  <button @click="$emit('click', $event)">
+    <slot>Кнопка</slot>
+  </button>
 </template>
 
 <script>
@@ -19,5 +17,5 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 </style>

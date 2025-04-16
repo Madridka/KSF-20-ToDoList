@@ -1,10 +1,16 @@
 <template>
-  <div>
+  <div class="todo">
     <div v-for="item in todoList" :key="item.id">
-      <div v-if="editingId !== item.id">
-        <input type="checkbox" :checked="item.completed" />{{ item.title }}
-        <Button @click="deleteTask(item)">DEL</Button>
-        <Button @click="startEdit(item)">EDIT</Button>
+      <div class="todo__item" v-if="editingId !== item.id">
+        <input type="checkbox" :checked="item.completed" />
+        <div class="todo__item-title" v-if="item.completed === true">
+          <span class="todo__item-title-completed">{{ item.title }}</span>
+        </div>
+        <div class="todo__item-title" v-else>
+          {{ item.title }}
+        </div>
+        <Button class="btn btn-edit" @click="startEdit(item)">EDIT</Button>
+        <Button class="btn btn-del" @click="deleteTask(item)">DEL</Button>
       </div>
       <div v-else>
         <input type="text" v-model="editingTask.title" placeholder="Дело" />
@@ -64,27 +70,28 @@ export default {
 </script>
 
 
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-.inline {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #e8f5e9;
-  border-radius: 4px;
-  text-align: right;
-  font-size: 16px;
+<style lang="scss" scoped>
+.todo {
+  width: 700px;
+  height: 900px;
+
+  &__item {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    border-bottom: 1px solid black;
+
+    &-title {
+      flex: 1;
+      text-align: left;
+
+      &-completed {
+        text-decoration: line-through 2px;
+      }
+    }
+  }
 }
 </style>
